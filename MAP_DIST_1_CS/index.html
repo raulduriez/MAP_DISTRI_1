@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/filter.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
+        <style>
+        #map {
+            width: 1250px;
+            height: 600px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div  > <h1> Frente Sandinista de Liberación Nacional - FSLN Distrito 1 Ciudad Sandino</h1>    </div>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/tailDT.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
+        <script src="data/limitedeciudadsandino1_2.js"></script>
+        <script src="data/UV_C_Sandino_D1_3.js"></script>
+        <script src="data/puntodeinteres2_4.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[12.154132363381258,-86.36506030468821],[12.171547512273337,-86.32989080302063]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleSatellite_0');
+        map.getPane('pane_GoogleSatellite_0').style.zIndex = 400;
+        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_GoogleSatellite_0;
+        map.addLayer(layer_GoogleSatellite_0);
+        map.createPane('pane_OSMStandard_1');
+        map.getPane('pane_OSMStandard_1').style.zIndex = 401;
+        var layer_OSMStandard_1 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_1',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_1;
+        map.addLayer(layer_OSMStandard_1);
+        function pop_limitedeciudadsandino1_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESCRIPCIO'] !== null ? autolinker.link(feature.properties['DESCRIPCIO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        var pattern_limitedeciudadsandino1_2_0 = new L.StripePattern({
+            weight: 0.3,
+            spaceWeight: 2.0,
+            color: '#de1fae',
+            opacity: 1.0,
+            spaceOpacity: 0,
+            angle: 225
+        });
+        pattern_limitedeciudadsandino1_2_0.addTo(map);
+        function style_limitedeciudadsandino1_2_0(feature) {
+            switch(String(feature.properties['DESCRIPCIO'])) {
+                case 'DISTRITO 1':
+                    return {
+                pane: 'pane_limitedeciudadsandino1_2',
+                opacity: 1,
+                color: 'rgba(77,175,74,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+                    break;
+                case 'DISTRITO 2':
+                    return {
+                pane: 'pane_limitedeciudadsandino1_2',
+                stroke: false,
+                fillOpacity: 1,
+                fillPattern: pattern_limitedeciudadsandino1_2_0,
+                interactive: false,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_limitedeciudadsandino1_2');
+        map.getPane('pane_limitedeciudadsandino1_2').style.zIndex = 402;
+        map.getPane('pane_limitedeciudadsandino1_2').style['mix-blend-mode'] = 'normal';
+        var layer_limitedeciudadsandino1_2 = new L.geoJson(json_limitedeciudadsandino1_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_limitedeciudadsandino1_2',
+            layerName: 'layer_limitedeciudadsandino1_2',
+            pane: 'pane_limitedeciudadsandino1_2',
+            onEachFeature: pop_limitedeciudadsandino1_2,
+            style: style_limitedeciudadsandino1_2_0,
+        });
+        bounds_group.addLayer(layer_limitedeciudadsandino1_2);
+        map.addLayer(layer_limitedeciudadsandino1_2);
+        function pop_UV_C_Sandino_D1_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nom_UV</th>\
+                        <td>' + (feature.properties['Nom_UV'] !== null ? autolinker.link(feature.properties['Nom_UV'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Num_UV</th>\
+                        <td>' + (feature.properties['Num_UV'] !== null ? autolinker.link(feature.properties['Num_UV'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nom_Sra1</th>\
+                        <td>' + (feature.properties['Nom_Sra1'] !== null ? autolinker.link(feature.properties['Nom_Sra1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nom_Sro_2</th>\
+                        <td>' + (feature.properties['Nom_Sro_2'] !== null ? autolinker.link(feature.properties['Nom_Sro_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Observacio'] !== null ? autolinker.link(feature.properties['Observacio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nom_Num_UV</th>\
+                        <td>' + (feature.properties['Nom_Num_UV'] !== null ? autolinker.link(feature.properties['Nom_Num_UV'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cod_distr'] !== null ? autolinker.link(feature.properties['cod_distr'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Cod_Barrio'] !== null ? autolinker.link(feature.properties['Cod_Barrio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['codbarrio'] !== null ? autolinker.link(feature.properties['codbarrio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_UV_C_Sandino_D1_3_0(feature) {
+            switch(String(feature.properties['Nom_UV'])) {
+                case 'Bella Cruz':
+                    return {
+                pane: 'pane_UV_C_Sandino_D1_3',
+                opacity: 1,
+                color: 'rgba(239,49,239,1.0)',
+                dashArray: '10,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 5.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(32,237,210,0.3254901960784314)',
+                interactive: true,
+            }
+                    break;
+                case 'Carlos Fonseca':
+                    return {
+                pane: 'pane_UV_C_Sandino_D1_3',
+                opacity: 1,
+                color: 'rgba(239,49,239,1.0)',
+                dashArray: '10,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 5.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(228,210,107,0.2980392156862745)',
+                interactive: true,
+            }
+                    break;
+                case 'Hilario Sanchez':
+                    return {
+                pane: 'pane_UV_C_Sandino_D1_3',
+                opacity: 1,
+                color: 'rgba(239,49,239,1.0)',
+                dashArray: '10,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 5.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(233,106,125,0.32941176470588235)',
+                interactive: true,
+            }
+                    break;
+                case 'Marlon Zelaya':
+                    return {
+                pane: 'pane_UV_C_Sandino_D1_3',
+                opacity: 1,
+                color: 'rgba(239,49,239,1.0)',
+                dashArray: '10,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 5.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(93,220,71,0.3333333333333333)',
+                interactive: true,
+            }
+                    break;
+                case 'Villa la Concha':
+                    return {
+                pane: 'pane_UV_C_Sandino_D1_3',
+                opacity: 1,
+                color: 'rgba(239,49,239,1.0)',
+                dashArray: '10,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 5.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(79,99,225,0.34509803921568627)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_UV_C_Sandino_D1_3');
+        map.getPane('pane_UV_C_Sandino_D1_3').style.zIndex = 403;
+        map.getPane('pane_UV_C_Sandino_D1_3').style['mix-blend-mode'] = 'normal';
+        var layer_UV_C_Sandino_D1_3 = new L.geoJson(json_UV_C_Sandino_D1_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_UV_C_Sandino_D1_3',
+            layerName: 'layer_UV_C_Sandino_D1_3',
+            pane: 'pane_UV_C_Sandino_D1_3',
+            onEachFeature: pop_UV_C_Sandino_D1_3,
+            style: style_UV_C_Sandino_D1_3_0,
+        });
+        bounds_group.addLayer(layer_UV_C_Sandino_D1_3);
+        map.addLayer(layer_UV_C_Sandino_D1_3);
+        function pop_puntodeinteres2_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['osm_id'] !== null ? autolinker.link(feature.properties['osm_id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">name</th>\
+                        <td>' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['highway'] !== null ? autolinker.link(feature.properties['highway'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>CLASIFICAC</strong><br />' + (feature.properties['CLASIFICAC'] !== null ? autolinker.link(feature.properties['CLASIFICAC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nom_UV</th>\
+                        <td>' + (feature.properties['Nom_UV'] !== null ? autolinker.link(feature.properties['Nom_UV'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Num_UV</th>\
+                        <td>' + (feature.properties['Num_UV'] !== null ? autolinker.link(feature.properties['Num_UV'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nom_Sra1'] !== null ? autolinker.link(feature.properties['Nom_Sra1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nom_Sro_2'] !== null ? autolinker.link(feature.properties['Nom_Sro_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id_2'] !== null ? autolinker.link(feature.properties['id_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Num_UV_2'] !== null ? autolinker.link(feature.properties['Num_UV_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Observacio'] !== null ? autolinker.link(feature.properties['Observacio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nom_Num_UV</th>\
+                        <td>' + (feature.properties['Nom_Num_UV'] !== null ? autolinker.link(feature.properties['Nom_Num_UV'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cod_distr'] !== null ? autolinker.link(feature.properties['cod_distr'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Cod_Barrio'] !== null ? autolinker.link(feature.properties['Cod_Barrio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['codbarrio'] !== null ? autolinker.link(feature.properties['codbarrio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_puntodeinteres2_4_0() {
+            return {
+                pane: 'pane_puntodeinteres2_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,158,23,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_puntodeinteres2_4');
+        map.getPane('pane_puntodeinteres2_4').style.zIndex = 404;
+        map.getPane('pane_puntodeinteres2_4').style['mix-blend-mode'] = 'normal';
+        var layer_puntodeinteres2_4 = new L.geoJson(json_puntodeinteres2_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_puntodeinteres2_4',
+            layerName: 'layer_puntodeinteres2_4',
+            pane: 'pane_puntodeinteres2_4',
+            onEachFeature: pop_puntodeinteres2_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_puntodeinteres2_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_puntodeinteres2_4);
+        map.addLayer(layer_puntodeinteres2_4);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/puntodeinteres2_4.png" /> punto de interes 2': layer_puntodeinteres2_4,'UV_C_Sandino_D1<br /><table><tr><td style="text-align: center;"><img src="legend/UV_C_Sandino_D1_3_BellaCruz0.png" /></td><td>Bella Cruz</td></tr><tr><td style="text-align: center;"><img src="legend/UV_C_Sandino_D1_3_CarlosFonseca1.png" /></td><td>Carlos Fonseca</td></tr><tr><td style="text-align: center;"><img src="legend/UV_C_Sandino_D1_3_HilarioSanchez2.png" /></td><td>Hilario Sanchez</td></tr><tr><td style="text-align: center;"><img src="legend/UV_C_Sandino_D1_3_MarlonZelaya3.png" /></td><td>Marlon Zelaya</td></tr><tr><td style="text-align: center;"><img src="legend/UV_C_Sandino_D1_3_VillalaConcha4.png" /></td><td>Villa la Concha</td></tr></table>': layer_UV_C_Sandino_D1_3,'limite de ciudad sandino 1<br /><table><tr><td style="text-align: center;"><img src="legend/limitedeciudadsandino1_2_DISTRITO10.png" /></td><td>DISTRITO 1</td></tr><tr><td style="text-align: center;"><img src="legend/limitedeciudadsandino1_2_DISTRITO21.png" /></td><td>DISTRITO 2</td></tr></table>': layer_limitedeciudadsandino1_2,"OSM Standard": layer_OSMStandard_1,"Google Satellite": layer_GoogleSatellite_0,}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_UV_C_Sandino_D1_3.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['Nom_Num_UV'] !== null?String('<div style="color: #fbff1f; font-size: 10pt; font-family: \'Arial\', sans-serif;">' + layer.feature.properties['Nom_Num_UV']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_UV_C_Sandino_D1_3'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var mapDiv = document.getElementById('map');
+        var row = document.createElement('div');
+        row.className="row";
+        row.id="all";
+        row.style.height = "100%";
+        var col1 = document.createElement('div');
+        col1.className="col9";
+        col1.id = "mapWindow";
+        col1.style.height = "99%";
+        col1.style.width = "80%";
+        col1.style.display = "inline-block";
+        var col2 = document.createElement('div');
+        col2.className="col3";
+        col2.id = "menu";
+        col2.style.display = "inline-block";
+        mapDiv.parentNode.insertBefore(row, mapDiv);
+        document.getElementById("all").appendChild(col1);
+        document.getElementById("all").appendChild(col2);
+        col1.appendChild(mapDiv)
+        var Filters = {"Nom_Num_UV": "str","CLASIFICAC": "str"};
+        function filterFunc() {
+          map.eachLayer(function(lyr){
+          if ("options" in lyr && "dataVar" in lyr["options"]){
+            features = this[lyr["options"]["dataVar"]].features.slice(0);
+            try{
+              for (key in Filters){
+                keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
+                if (Filters[key] == "str" || Filters[key] == "bool"){
+                  var selection = [];
+                  var options = document.getElementById("sel_" + keyS).options
+                  for (var i=0; i < options.length; i++) {
+                    if (options[i].selected) selection.push(options[i].value);
+                  }
+                    try{
+                      if (key in features[0].properties){
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
+                }
+              }
+            } catch(err){
+            }
+          this[lyr["options"]["layerName"]].clearLayers();
+          this[lyr["options"]["layerName"]].addData(features);
+        var i = 0;
+        layer_UV_C_Sandino_D1_3.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['Nom_Num_UV'] !== null?String('<div style="color: #fbff1f; font-size: 10pt; font-family: \'Arial\', sans-serif;">' + layer.feature.properties['Nom_Num_UV']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_UV_C_Sandino_D1_3'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+          }
+          })
+        }
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Nom_Num_UV = document.createElement('div');
+            div_Nom_Num_UV.id = "div_Nom_Num_UV";
+            div_Nom_Num_UV.className= "filterselect";
+            document.getElementById("menu").appendChild(div_Nom_Num_UV);
+            sel_Nom_Num_UV = document.createElement('select');
+            sel_Nom_Num_UV.multiple = true;
+            sel_Nom_Num_UV.size = 10;
+            sel_Nom_Num_UV.id = "sel_Nom_Num_UV";
+            var Nom_Num_UV_options_str = "<option value='' unselected></option>";
+            sel_Nom_Num_UV.onchange = function(){filterFunc()};
+            Nom_Num_UV_options_str  += '<option value="Bella Cruz - 01">Bella Cruz - 01</option>';
+            Nom_Num_UV_options_str  += '<option value="Bella Cruz - 02">Bella Cruz - 02</option>';
+            Nom_Num_UV_options_str  += '<option value="Bella Cruz - 03">Bella Cruz - 03</option>';
+            Nom_Num_UV_options_str  += '<option value="Bella Cruz - 04">Bella Cruz - 04</option>';
+            Nom_Num_UV_options_str  += '<option value="Bella Cruz - 05">Bella Cruz - 05</option>';
+            Nom_Num_UV_options_str  += '<option value="Carlos Fonseca - 01">Carlos Fonseca - 01</option>';
+            Nom_Num_UV_options_str  += '<option value="Carlos Fonseca - 02">Carlos Fonseca - 02</option>';
+            Nom_Num_UV_options_str  += '<option value="Hilario Sanchez - 01">Hilario Sanchez - 01</option>';
+            Nom_Num_UV_options_str  += '<option value="Hilario Sanchez - 02">Hilario Sanchez - 02</option>';
+            Nom_Num_UV_options_str  += '<option value="Hilario Sanchez - 03">Hilario Sanchez - 03</option>';
+            Nom_Num_UV_options_str  += '<option value="Marlon Zelaya - 01">Marlon Zelaya - 01</option>';
+            Nom_Num_UV_options_str  += '<option value="Marlon Zelaya - 02">Marlon Zelaya - 02</option>';
+            Nom_Num_UV_options_str  += '<option value="Marlon Zelaya - 03">Marlon Zelaya - 03</option>';
+            Nom_Num_UV_options_str  += '<option value="Marlon Zelaya - 04">Marlon Zelaya - 04</option>';
+            Nom_Num_UV_options_str  += '<option value="Marlon Zelaya - 05">Marlon Zelaya - 05</option>';
+            Nom_Num_UV_options_str  += '<option value="Villa la Concha - 01">Villa la Concha - 01</option>';
+            sel_Nom_Num_UV.innerHTML = Nom_Num_UV_options_str;
+            div_Nom_Num_UV.appendChild(sel_Nom_Num_UV);
+            var lab_Nom_Num_UV = document.createElement('div');
+            lab_Nom_Num_UV.innerHTML = 'Seleccionar aqui  UV';
+            lab_Nom_Num_UV.className = 'filterlabel';
+            div_Nom_Num_UV.appendChild(lab_Nom_Num_UV);
+            var reset_Nom_Num_UV = document.createElement('div');
+            reset_Nom_Num_UV.innerHTML = 'Limpiar Filtro ';
+            reset_Nom_Num_UV.className = 'filterlabel';
+            reset_Nom_Num_UV.onclick = function() {
+                var options = document.getElementById("sel_Nom_Num_UV").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_Nom_Num_UV.appendChild(reset_Nom_Num_UV);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_CLASIFICAC = document.createElement('div');
+            div_CLASIFICAC.id = "div_CLASIFICAC";
+            div_CLASIFICAC.className= "filterselect";
+            document.getElementById("menu").appendChild(div_CLASIFICAC);
+            sel_CLASIFICAC = document.createElement('select');
+            sel_CLASIFICAC.multiple = true;
+            sel_CLASIFICAC.size = 10;
+            sel_CLASIFICAC.id = "sel_CLASIFICAC";
+            var CLASIFICAC_options_str = "<option value='' unselected></option>";
+            sel_CLASIFICAC.onchange = function(){filterFunc()};
+            CLASIFICAC_options_str  += '<option value="Bar">Bar</option>';
+            CLASIFICAC_options_str  += '<option value="Centro Deportivo Gobierno">Centro Deportivo Gobierno</option>';
+            CLASIFICAC_options_str  += '<option value="Centro deportivo Gob">Centro deportivo Gob</option>';
+            CLASIFICAC_options_str  += '<option value="Ciber">Ciber</option>';
+            CLASIFICAC_options_str  += '<option value="Clinica">Clinica</option>';
+            CLASIFICAC_options_str  += '<option value="Empresas">Empresas</option>';
+            CLASIFICAC_options_str  += '<option value="Escuela">Escuela</option>';
+            CLASIFICAC_options_str  += '<option value="Estatuas">Estatuas</option>';
+            CLASIFICAC_options_str  += '<option value="Farmacia">Farmacia</option>';
+            CLASIFICAC_options_str  += '<option value="Ferreteria">Ferreteria</option>';
+            CLASIFICAC_options_str  += '<option value="Gimnacio">Gimnacio</option>';
+            CLASIFICAC_options_str  += '<option value="Iglesia Catolica">Iglesia Catolica</option>';
+            CLASIFICAC_options_str  += '<option value="Iglesia Evangelica">Iglesia Evangelica</option>';
+            CLASIFICAC_options_str  += '<option value="Instituciones">Instituciones</option>';
+            CLASIFICAC_options_str  += '<option value="Molinos">Molinos</option>';
+            CLASIFICAC_options_str  += '<option value="Museos">Museos</option>';
+            CLASIFICAC_options_str  += '<option value="ONG">ONG</option>';
+            CLASIFICAC_options_str  += '<option value="Plaza">Plaza</option>';
+            CLASIFICAC_options_str  += '<option value="Pulperia">Pulperia</option>';
+            CLASIFICAC_options_str  += '<option value="Punto de Referencia">Punto de Referencia</option>';
+            sel_CLASIFICAC.innerHTML = CLASIFICAC_options_str;
+            div_CLASIFICAC.appendChild(sel_CLASIFICAC);
+            var lab_CLASIFICAC = document.createElement('div');
+            lab_CLASIFICAC.innerHTML = 'Selecconar Punto de Interes';
+            lab_CLASIFICAC.className = 'filterlabel';
+            div_CLASIFICAC.appendChild(lab_CLASIFICAC);
+            var reset_CLASIFICAC = document.createElement('div');
+            reset_CLASIFICAC.innerHTML = 'Limpiar filtro';
+            reset_CLASIFICAC.className = 'filterlabel';
+            reset_CLASIFICAC.onclick = function() {
+                var options = document.getElementById("sel_CLASIFICAC").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_CLASIFICAC.appendChild(reset_CLASIFICAC);
+        resetLabels([layer_UV_C_Sandino_D1_3]);
+        map.on("zoomend", function(){
+            resetLabels([layer_UV_C_Sandino_D1_3]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_UV_C_Sandino_D1_3]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_UV_C_Sandino_D1_3]);
+        });
+        </script>
+    </body>
+</html>
